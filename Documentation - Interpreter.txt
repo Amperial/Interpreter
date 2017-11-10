@@ -1,0 +1,38 @@
+User Manual
+===========
+How to use Interpreter.java:
+- Compile Interpreter.java
+- Run "java core/Interpreter filename inputfilename", for example "java core/Interpreter test1 test1_input1"
+- Input data is printed, then Program is parsed, printed, and executed.
+
+How to use Interpreter class in code:
+- Get a Tokenizer object ready to use with the program input (explained in tokenizer documentation)
+- Instantiate an Interpreter object, passing in the tokenizer object and input data into the constructor
+- Program is then parsed, printed, and executed
+
+Interpreter Design
+==================
+
+Interpreter class:
+- Contains the tokenizer
+- Contains input data
+- Contains core program object
+- Contains mapping of ids to values
+- Contains utility methods to shortcut checking/expecting/skipping tokens in various orders
+
+Node, Program, Statement etc OO core classes:
+- Represent a part of the core program
+- Holds references to other data that makes up the node (such as expression in assignment)
+- Handles parsing, pretty printing, and execution for itself
+
+main method:
+- The tokenizer is setup as explained previously in tokenizer documentation
+- Input data is read in a similar fashion as the program file
+- Interpreter is instantiated which subsequently parses, prints, and executes the program
+
+Testing
+=======
+Manual testing was performed with the included files "test1", "test2", and "test3".
+These files were provided by the instructor on the course website.
+Further extensive testing was performed by messing with these files to test all OO core classes and possible bugs
+No known bugs exist.

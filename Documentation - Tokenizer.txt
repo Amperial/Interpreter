@@ -1,0 +1,55 @@
+User Manual
+===========
+How to use Tokenizer.java:
+- Compile Tokenizer.java
+- Run "java Tokenizer filename", for example "java Tokenizer test1"
+- Token numbers are printed to standard output.
+
+How to use Tokenizer class in code:
+- Instantiate a Tokenizer object
+- Add Token objects to the tokenizer for all of the language's tokens
+- Use tokenize(input) method to tokenize the input and print the token numbers to standard output.
+- Alternatively, use setInput(input), getToken(), and skipToken() methods to manually control tokenization.
+
+Tokenizer Design
+================
+
+Token class:
+- The token class holds a regular expression pattern to match against the input, and the token number.
+- Its "match(input)" method creates a Matcher from the pattern and input, and attempts to find a match
+  at the start of the string (matcher.find() && matcher.start() == 0).
+- If a match is found, the length requirement is checked (used for integer and identifier 8 char limit)
+- If the length is satisfied, the matched token is deleted from the input and returned.
+
+Tokenizer class:
+- The tokenizer class uses a list of Token objects to match against and modify the StringBuilder input.
+- The tokenizer keeps track of the current token and value, retrievable with "getToken()" and "getValue()"
+- First the tokenizer is given an input with "setInput". Any whitespace is removed from the start of the input.
+- To advance to the next token, the "skipToken()" method is called.
+    - If the input is empty, the current token and value are set to EOF and skipToken returns false.
+    - Otherwise, skipToken iterates through the Token objects in order, calling their match(input) method.
+    - If a match is found, the current token and value are updated.
+        - The matched token will have been deleted from the input by the match(input) method.
+        - Again any whitespace is removed from the start of the updated input.
+        - skipToken then returns true to indicate the input still has more tokens.
+    - If none of the Token objects match, the next input token is illegal and an exception is thrown.
+- A "tokenize(input)" method is provided to satisfy the part 1 requirements, using setInput, getToken,
+  and skipToken. First setInput(input) is called, then the method calls skipToken() and prints getToken()
+  until there are no more remaining tokens in the input or an exception occurs.
+
+Usage:
+- The input filename is read and the contents placed into a StringBuilder instance.
+- Then a Tokenizer object is created.
+- Token objects for the Core programming language are added to the tokenizer.
+    - As explained above, this entails a token number and regular expression.
+    - For reserved word and special symbol tokens, the regex matches the token exactly.
+        - The tokenizer doesn't care if multiple of these tokens are next to each other.
+    - For the integer and identifier tokens, the max length is set to 8.
+- The tokenize(input) method is called with the StringBuilder input which prints the token numbers as expected.
+
+Testing
+=======
+Manual testing was performed with the included files "test1", "test2", and "test3".
+These files were provided by the instructor on the course website.
+The output of tokenizing these files was confirmed to be exactly the same as expected.
+No known bugs exist.
